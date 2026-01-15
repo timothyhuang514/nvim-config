@@ -171,10 +171,10 @@ keymap.set("n", "gB", '<cmd>call buf_utils#GoToBuffer(v:count, "backward")<cr>',
 })
 
 -- Switch windows
-keymap.set("n", "<left>", "<c-w>h")
-keymap.set("n", "<Right>", "<C-W>l")
-keymap.set("n", "<Up>", "<C-W>k")
-keymap.set("n", "<Down>", "<C-W>j")
+-- keymap.set("n", "<Left>", "<c-w>h")
+-- keymap.set("n", "<Right>", "<C-W>l")
+-- keymap.set("n", "<Up>", "<C-W>k")
+-- keymap.set("n", "<Down>", "<C-W>j")
 
 -- Text objects for URL
 keymap.set({ "x", "o" }, "iu", "<cmd>call text_obj#URL()<cr>", { desc = "URL text object" })
@@ -259,3 +259,27 @@ keymap.set("n", "<Esc>", function()
 end, {
   desc = "close floating win",
 })
+
+-- Swap 'j' and 'k'
+keymap.set("n", "j", "<up>")
+keymap.set("n", "k", "<down>")
+
+-- Jump by word in insert mode using Alt (Option)
+-- If using iTerm2 on Mac, make sure to do the following
+-- 1. Open Settings (Cmd + ,).
+-- 2. Go to the Profiles tab.
+-- 3. Select your active profile on the left (usually "Default").
+-- 4. Click the Keys sub-tab on the right.
+-- 5. At the bottom, locate Left Option Key.
+-- 6. Select the Esc+ radio button.
+keymap.set('i', '<A-Left>', '<C-o>b', { desc = 'Jump back one word' })
+keymap.set('i', '<A-Right>', '<C-o>e', { desc = 'Jump forward one word' })
+
+-- Delete word backward (Alt + Backspace)
+-- <C-w> is a built-in Insert mode command that deletes the previous word
+keymap.set('i', '<A-BS>', '<C-w>', { desc = 'Delete word backward' })
+
+-- Delete word forward (Alt + Delete)
+-- <C-o> switches to Normal mode for one command; 'dw' deletes the next word
+keymap.set('i', '<A-d>', '<C-o>dw', { desc = 'Delete word forward' })
+
