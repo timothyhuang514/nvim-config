@@ -10,6 +10,7 @@
 -- GitHub: https://github.com/jdhao
 -- StackOverflow: https://stackoverflow.com/users/6064933/jdhao
 vim.loader.enable()
+vim.opt.conceallevel = 2
 
 local utils = require("utils")
 
@@ -39,3 +40,23 @@ local color_scheme = require("colorschemes")
 
 -- Load a random colorscheme
 color_scheme.rand_colorscheme()
+
+-- Create an autocommand group to keep things organized
+local markdown_prose_group = vim.api.nvim_create_augroup("MarkdownProse", { clear = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = markdown_prose_group,
+  pattern = "markdown", -- Only trigger for .md files
+  callback = function()
+    -- Enable wrapping and visual alignment
+    vim.opt_local.wrap = true           -- Enable line wrapping
+    vim.opt_local.linebreak = true      -- Don't break words
+    vim.opt_local.breakindent = true    -- Wrapped lines match indentation
+
+    -- Fix the hanging indent for lists (Line 13 fix)
+    vim.opt_local.breakindentopt = "list:-1" -- Align behind the bullet
+
+    -- Disable C-style indentation that breaks lists
+    vim.opt_local.smartindent = false   -- Prevents misaligned wraps
+  end,
+})
