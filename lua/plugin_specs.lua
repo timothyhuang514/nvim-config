@@ -768,6 +768,31 @@ local plugin_specs = {
     ---@type quicker.SetupOptions
     opts = {},
   },
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",
+    lazy = true,
+    ft = "markdown",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    keys = {
+      -- Jump to link under cursor
+      { "<leader>of", "<cmd>ObsidianFollowLink<cr>", desc = "Obsidian Follow Link" },
+      { "<leader>ov", "<cmd>ObsidianFollowLink vsplit<cr>", desc = "Obsidian Follow Vsplit" },
+      -- Quick switch notes
+      { "<leader>os", "<cmd>ObsidianQuickSwitch<cr>", desc = "Obsidian Search/Switch" },
+    },
+    opts = {
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/Documents/GitHub/Notes", -- CHANGE THIS to your actual path
+        },
+      },
+      open_strategy = "vsplit",
+    },
+  },
 }
 
 require("lazy").setup {
