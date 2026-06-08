@@ -60,3 +60,6 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.smartindent = false   -- Prevents misaligned wraps
   end,
 })
+
+-- Turn off persisten undo
+vim.opt.undofile = false
