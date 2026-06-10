@@ -68,14 +68,14 @@ local plugin_specs = {
       require("config.treesitter")
     end,
   },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "VeryLazy",
-    branch = "master",
-    config = function()
-      require("config.treesitter-textobjects")
-    end,
-  },
+ --- {
+ ---   "nvim-treesitter/nvim-treesitter-textobjects",
+ ---   event = "VeryLazy",
+ ---   branch = "master",
+ ---   config = function()
+ ---     require("config.treesitter-textobjects")
+ ---   end,
+ --- },
   { "machakann/vim-swap", event = "VeryLazy" },
 
   -- Super fast buffer jump
@@ -385,14 +385,14 @@ local plugin_specs = {
 
   -- Better git log display
   { "rbong/vim-flog", cmd = { "Flog" } },
-  {
-    "akinsho/git-conflict.nvim",
-    version = "*",
-    event = "VeryLazy",
-    config = function()
-      require("config.git-conflict")
-    end,
-  },
+  -- {
+  --   "akinsho/git-conflict.nvim",
+  --   version = "*",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("config.git-conflict")
+  --   end,
+  -- },
   {
     "ruifm/gitlinker.nvim",
     event = "User InGitRepo",
@@ -782,13 +782,25 @@ local plugin_specs = {
       { "<leader>ov", "<cmd>ObsidianFollowLink vsplit<cr>", desc = "Obsidian Follow Vsplit" },
       -- Quick switch notes
       { "<leader>os", "<cmd>ObsidianQuickSwitch<cr>", desc = "Obsidian Search/Switch" },
+      --- New notes
+      { "<leader>on", "<cmd>ObsidianNew<cr>", desc = "Obsidian New Note" },
+      --- New notes from a template
+      { "<leader>ot", "<cmd>ObsidianNewFromTemplate<cr>", desc = "Obsidian New Note from a template" },
     },
     opts = {
       workspaces = {
         {
           name = "personal",
-          path = "~/Documents/GitHub/Notes", -- CHANGE THIS to your actual path
+          path = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/My Vault",
+          overrides = {
+            notes_subdir = "00_Inbox",
+            -- Without changing this field, it will still use "current_dir"
+            new_notes_location = "notes_subdir",
+          },
         },
+      },
+      templates = {
+       folder = "99_Systems/00_Templates"
       },
       open_strategy = "vsplit",
     },
