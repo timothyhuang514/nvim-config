@@ -260,10 +260,6 @@ end, {
   desc = "close floating win",
 })
 
--- Swap 'j' and 'k'
-keymap.set("n", "j", "<up>")
-keymap.set("n", "k", "<down>")
-
 -- Jump by word in insert mode using Alt (Option)
 -- If using iTerm2 on Mac, make sure to do the following
 -- 1. Open Settings (Cmd + ,).
