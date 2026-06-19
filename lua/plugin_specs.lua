@@ -786,6 +786,32 @@ local plugin_specs = {
       { "<leader>on", "<cmd>ObsidianNew<cr>", desc = "Obsidian New Note" },
       --- New notes from a template
       { "<leader>ot", "<cmd>ObsidianNewFromTemplate<cr>", desc = "Obsidian New Note from a template" },
+      -- Insert DataviewJS tag-list view
+      {
+        "<leader>ol",
+        function()
+          local snippet = {
+            "```dataviewjs",
+            'dv.view("99_Systems/04_Scripts/dv-js/tag-list", { tags: ["here"] });',
+            "```",
+          }
+          vim.api.nvim_put(snippet, "l", true, true)
+          vim.cmd("normal! k0f]h")
+          vim.cmd("startinsert")
+        end,
+        desc = "Insert DataviewJS tag-list view",
+      },
+      {
+        "<leader>tn",
+        function()
+          local snippet = {
+            " #TODO/take-notes",
+          }
+          vim.api.nvim_put(snippet, "c", true, true)
+          vim.cmd("startinsert")
+        end,
+        desc = "Insert DataviewJS tag-list view",
+      },
     },
     opts = {
       workspaces = {
