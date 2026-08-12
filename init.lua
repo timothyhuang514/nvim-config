@@ -64,21 +64,4 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Turn off persisten undo
 vim.opt.undofile = false
 
-vim.keymap.set('n', '<leader>tl', function()
-  -- The snippet to insert
-  local snippet = {
-    "```dataviewjs",
-    'dv.view("99_Systems/04_Scripts/dv-js/tag-list", { tags: ["insert your tag here"] });',
-    "```"
-  }
-
-  -- Insert the lines
-  vim.api.nvim_put(snippet, 'l', true, true)
-
-  -- Move cursor to the middle line inside the tags
-  vim.cmd('normal! k0f[ll')
-
-  -- Switch to insert mode
-  vim.cmd('startinsert')
-end, { desc = "Insert DataviewJS tag-list view" })
 

@@ -1,12 +1,13 @@
 -- Setup nvim-cmp.
 local cmp = require("cmp")
+local luasnip = require("luasnip")
 
 -- The extentions needed by nvim-cmp should be loaded beforehand
 require("cmp_nvim_lsp")
 require("cmp_path")
 require("cmp_buffer")
 require("cmp_omni")
-require("cmp_nvim_ultisnips")
+require("cmp_luasnip")
 require("cmp_cmdline")
 
 local MiniIcons = require("mini.icons")
@@ -14,14 +15,15 @@ local MiniIcons = require("mini.icons")
 cmp.setup {
   snippet = {
     expand = function(args)
-      -- For `ultisnips` user.
-      vim.fn["UltiSnips#Anon"](args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert {
     ["<Tab>"] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -29,6 +31,8 @@ cmp.setup {
     ["<S-Tab>"] = function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -41,7 +45,7 @@ cmp.setup {
   },
   sources = {
     { name = "nvim_lsp" }, -- For nvim-lsp
-    { name = "ultisnips" }, -- For ultisnips user.
+    { name = "luasnip" }, -- For luasnip user.
     { name = "path" }, -- for path completion
     { name = "buffer", keyword_length = 2 }, -- for buffer word completion
   },
@@ -66,7 +70,7 @@ cmp.setup {
 cmp.setup.filetype("tex", {
   sources = {
     { name = "omni" },
-    { name = "ultisnips" }, -- For ultisnips user.
+    { name = "luasnip" }, -- For luasnip user.
     { name = "buffer", keyword_length = 2 }, -- for buffer word completion
     { name = "path" }, -- for path completion
   },

@@ -64,7 +64,7 @@ and how to set up on different platforms (Linux, macOS, and Windows).
 + Faster matching pair insertion and jump via [nvim-autopairs](https://github.com/windwp/nvim-autopairs).
 + Smarter and faster matching pair management (add, replace or delete) via [vim-sandwich](https://github.com/machakann/vim-sandwich).
 + Fast buffer jump via [hop.nvim](https://github.com/phaazon/hop.nvim).
-+ Powerful snippet insertion via [Ultisnips](https://github.com/SirVer/ultisnips).
++ Powerful snippet insertion via [LuaSnip](https://github.com/L3MON4D3/LuaSnip).
 + Beautiful statusline via [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim).
 + File tree explorer via [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua).
 + Better quickfix list with [nvim-bqf](https://github.com/kevinhwang91/nvim-bqf).

@@ -27,7 +27,7 @@ local plugin_specs = {
   { "hrsh7th/cmp-buffer", lazy = true },
   { "hrsh7th/cmp-omni", lazy = true },
   { "hrsh7th/cmp-cmdline", lazy = true },
-  { "quangnguyen30192/cmp-nvim-ultisnips", lazy = true },
+  { "saadparwaiz1/cmp_luasnip", lazy = true },
   {
     "hrsh7th/nvim-cmp",
     name = "nvim-cmp",
@@ -275,27 +275,16 @@ local plugin_specs = {
 
   -- Snippet engine and snippet template
   {
-    "SirVer/ultisnips",
-    init = function()
-      vim.cmd([[
-        " Trigger configuration. Do not use <tab> if you use YouCompleteMe
-        let g:UltiSnipsExpandTrigger='<c-j>'
-
-        " Do not look for SnipMate snippets
-        let g:UltiSnipsEnableSnipMate = 0
-
-        " Shortcut to jump forward and backward in tabstop positions
-        let g:UltiSnipsJumpForwardTrigger='<c-j>'
-        let g:UltiSnipsJumpBackwardTrigger='<c-k>'
-
-        " Configuration for custom snippets directory, see
-        " https://jdhao.github.io/2019/04/17/neovim_snippet_s1/ for details.
-        let g:UltiSnipsSnippetDirectories=['UltiSnips', 'my_snippets']
-      ]])
-    end,
+    "L3MON4D3/LuaSnip",
+    version = "v2.*",
+    build = "make install_jsregexp",
     dependencies = {
       "honza/vim-snippets",
     },
+    config = function()
+      require("luasnip.loaders.from_snipmate").lazy_load()
+      require("luasnip.loaders.from_snipmate").lazy_load({ paths = { vim.fn.stdpath("config") .. "/my_snippets" } })
+    end,
     event = "InsertEnter",
   },
 

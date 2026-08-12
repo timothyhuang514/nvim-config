@@ -1,0 +1,79 @@
+diff --git a/init.lua b/init.lua
+index 97b9b4b..ac7e2b7 100644
+--- a/init.lua
++++ b/init.lua
+@@ -63,3 +63,74 @@ vim.api.nvim_create_autocmd("FileType", {
+ 
+ -- Turn off persisten undo
+ vim.opt.undofile = false
++
++-- Bible verse query
++local function create_bible_query_note()
++    -- 1. Ask the user for the target folder/filename path
++    -- Default path is set to a relative vault location
++    vim.ui.input({
++        prompt = "Enter the verse: ",
++    }, function(verse)
++        if not verse or verse == "" then return end
++
++        -- Append .md extension if missing
++        local note_path = string.gsub(verse, ":", "_")
++        if not string.match(note_path, "%.md$") then
++            note_path = note_path .. ".md"
++        end
++
++        -- 2. Populate dataviewjs query for the verse reference
++        if not verse or verse == "" then return end
++
++        local current_date = os.date("%Y-%m-%d")
++
++        -- 3. Construct the note lines
++        local lines = {
++            "---",
++            "id: Bible Verse Query - " .. current_date,
++            "aliases: []",
++            "tags:",
++            "  - BibleVerseQuery",
++            "Created Date: \"" .. current_date .. "\"",
++            "---",
++            "```dataviewjs",
++            'const query = "' .. verse .. '";',
++            "",
++            "const files = dv.pages();",
++            "const matches = [];",
++            "",
++            "if (query) {",
++            "    for (let p of files) {",
++            "        const file = app.vault.getAbstractFileByPath(p.file.path);",
++            "        if (file) {",
++            "            try {",
++            "                const content = await app.vault.read(file);",
++            "                if (content.includes(query)) {",
++            "                    matches.push([p.file.link, p.file.etags]);",
++            "                }",
++            "            } catch (error) {",
++            "                console.warn(`Skipped file: ${p.file.etags}`, error);",
++            "            }",
++            "        }",
++            "    }",
++            "    dv.header(3, `Search Results for: \"${query}\"`);",
++            "    dv.table([\"Matching Note\", \"Tags\"], matches);",
++            "} else {",
++            "    dv.paragraph(\"⚠️ *No search query was provided.*\");",
++            "}",
++            "```"
++            }
++
++            -- 4. Write the file to disk and open it in a buffer
++            vim.fn.writefile(lines, note_path)
++            vim.cmd("edit " .. vim.fn.fnameescape(note_path))
++            print("Note created at: " .. note_path)
++        end)
++end
++
++-- Create a Neovim user command to trigger it
++vim.api.nvim_create_user_command("BibleQueryNew", create_bible_query_note, {})
++
++-- Optional: Map it to a shortcut like <leader>bq
++vim.keymap.set("n", "<leader>bq", create_bible_query_note, { desc = "Create dynamic Bible query note" })
++
