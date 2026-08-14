@@ -38,8 +38,8 @@ require("diagnostic-conf")
 -- colorscheme settings
 local color_scheme = require("colorschemes")
 
--- Load a random colorscheme
-color_scheme.rand_colorscheme()
+-- Set default colorscheme
+color_scheme.colorscheme_conf.github()
 
 -- Create an autocommand group to keep things organized
 local markdown_prose_group = vim.api.nvim_create_augroup("MarkdownProse", { clear = true })
