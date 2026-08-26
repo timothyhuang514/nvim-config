@@ -64,4 +64,41 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Turn off persisten undo
 vim.opt.undofile = false
 
+-- Custom command & keymap to parse and insert Bible verses using parse-verses.py
+local function parse_verses_in_current_file()
+  vim.cmd("update") -- Save file first
+  local file = vim.api.nvim_buf_get_name(0)
+  if file == "" or not file:match("%.md$") then
+    vim.notify("Current buffer is not a Markdown file", vim.log.levels.WARN)
+    return
+  end
+
+  local python_bin = "/Users/timothyyu-jayhuang/Documents/GitHub/verse-insertion/.venv/bin/python"
+  local script_path = "/Users/timothyyu-jayhuang/Documents/GitHub/verse-insertion/parse-verses.py"
+
+  local cmd = string.format(
+    "%s %s -i %s",
+    vim.fn.shellescape(python_bin),
+    vim.fn.shellescape(script_path),
+    vim.fn.shellescape(file)
+  )
+
+  local out = vim.fn.system(cmd)
+  if vim.v.shell_error == 0 then
+    vim.cmd("edit!") -- Reload buffer to show inserted verses
+    vim.notify("Bible verses inserted successfully!", vim.log.levels.INFO)
+  else
+    vim.notify("Failed to parse verses:\n" .. out, vim.log.levels.ERROR)
+  end
+end
+
+vim.api.nvim_create_user_command("ParseVerses", parse_verses_in_current_file, {
+  desc = "Parse and insert Bible verse quotes into current Markdown file",
+})
+
+vim.keymap.set("n", "<leader>iv", parse_verses_in_current_file, {
+  silent = true,
+  desc = "Insert Bible verses into current Markdown file",
+})
+
 
