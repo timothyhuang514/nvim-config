@@ -803,6 +803,7 @@ local plugin_specs = {
       },
     },
     opts = {
+      disable_frontmatter = true,
       workspaces = {
         {
           name = "personal",
