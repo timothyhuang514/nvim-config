@@ -801,6 +801,17 @@ local plugin_specs = {
         end,
         desc = "Insert DataviewJS tag-list view",
       },
+      {
+        "<leader>ng",
+        function()
+          local snippet = {
+            " #nugget",
+          }
+          vim.api.nvim_put(snippet, "c", true, true)
+          vim.cmd("startinsert")
+        end,
+        desc = "Insert nugget tag"
+      }
     },
     opts = {
       workspaces = {
