@@ -799,7 +799,7 @@ local plugin_specs = {
           vim.api.nvim_put(snippet, "c", true, true)
           vim.cmd("startinsert")
         end,
-        desc = "Insert DataviewJS tag-list view",
+        desc = "Insert #TODO/take-notes tag",
       },
       {
         "<leader>ng",
